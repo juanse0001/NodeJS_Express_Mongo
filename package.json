@@ -26,5 +26,8 @@
   "homepage": "https://github.com/juanse0001/NodeJS_Express_Mongo#readme",
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
