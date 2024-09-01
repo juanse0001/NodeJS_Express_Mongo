@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/juanse0001/NodeJS_Express_Mongo/issues"
   },
-  "homepage": "https://github.com/juanse0001/NodeJS_Express_Mongo#readme"
+  "homepage": "https://github.com/juanse0001/NodeJS_Express_Mongo#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
