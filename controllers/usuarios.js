@@ -1,6 +1,6 @@
 const express = require('express');
 const Usuario = require('../models/curso_model');
-const Joi = requiere('@hapi/joi');
+const Joi = require('@hapi/joi');
 const ruta = express.Router();
 
 ruta.get('/', (req,res)=>{
