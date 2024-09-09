@@ -1,6 +1,11 @@
 const express = require('express');
+<<<<<<< HEAD
 const Usuario = require('../models/curso_model');
 const Joi = require('@hapi/joi');
+=======
+const Usuario = require('../logic/usuario_logic');
+const Joi = requiere('@hapi/joi');
+>>>>>>> apirest
 const ruta = express.Router();
 
 // Validaciones para el objeto usuario
@@ -20,7 +25,7 @@ const schema = Joi.object({
 
 // Endpoint de tipo GET para el recurso usuarios. Lista todos los usuarios
 ruta.get('/', (req, res) => {
-    let resultado = listarUsuarioActivos();
+    let resultado = logic.listarUsuarioActivos();
     resultado.then(usuarios => {
         res.json(usuarios);
     })
@@ -36,7 +41,7 @@ module.exports = ruta;
 ruta.post('/', (req, res) => {
     let body = req.body;
 
-    const { error, value } = schema.validate({nombre: body.nombre, email: body.email});
+    const { error, value } = logic.schema.validate({nombre: body.nombre, email: body.email});
     if (!error) {
         let resultado = crearUsuario(body);
 
@@ -60,9 +65,9 @@ ruta.post('/', (req, res) => {
 
 // Endpoint de tipo PUT para actualizar los datos del usuario
 ruta.put('/:email', (req, res) => {
-    const { error, value } = schema.validate({nombre: req.body.nombre});
+    const { error, value } = logic.schema.validate({nombre: req.body.nombre});
     if (!error) {
-        let resultado = actualizarUsuario(req.params.email, req.body);
+        let resultado = logic.actualizarUsuario(req.params.email, req.body);
         resultado.then(valor => {
             res.json({
                 valor
@@ -120,7 +125,7 @@ async function desactivarUsuario(email) {
 
 // Endpoint de tipo DELETE para el recurso USUARIOS
 ruta.delete('/:email', (req, res) => {
-    let resultado = desactivarUsuario(req.params.email);
+    let resultado = logic.desactivarUsuario(req.params.email);
     resultado.then(valor => {
         res.json({
             usuario: valor
