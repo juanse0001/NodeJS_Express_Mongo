@@ -95,6 +95,36 @@ async function actualizarUsuario(email, body) {
     return usuario;
 }
 
+// Función asíncrona para inactivar un usuario
+async function desactivarUsuario(email) {
+    let usuario = await Usuario.findOneAndUpdate(
+        { "email": email },
+        {
+            $set: {
+                estado: false
+            }
+        },
+        { new: true }
+    );
+    return usuario;
+}
+
+// Endpoint de tipo DELETE para el recurso USUARIOS
+ruta.delete('/:email', (req, res) => {
+    let resultado = desactivarUsuario(req.params.email);
+    resultado.then(valor => {
+        res.json({
+            usuario: valor
+        });
+    })
+    .catch(err => {
+        res.status(400).json({
+            err
+        });
+    });
+});
+
+
 
 
 
