@@ -5,7 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Conexión a la base de datos mongodb
-mongoose.connect('mongodb://localhost:27017/userscoursesdb', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://juansordonez:<db_password>@cluster0.vq7l1.mongodb.net/', {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('Conectado a MongoDB...'))
     .catch(err => console.log('No se pudo conectar con MongoDB...', err));
 
@@ -20,5 +20,5 @@ app.use('/api/cursos', cursos);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Api REST Ok, y ejecutándose...`);
+    console.log(`Api REST Ok, y ejecutándose...`);5VVx5+3k
 });
