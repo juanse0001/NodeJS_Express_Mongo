@@ -1,6 +1,6 @@
 const express = require('express');
 const seedDatabase = require('./seed/seeds')
-const connectDB = require('./database/db'); // Asegúrate de que la ruta sea correcta
+const connectDB = require('./cofigdb/db'); // Asegúrate de que la ruta sea correcta
 const cursosRoutes = require('./routes/cursos_routes');
 const usuariosRoutes = require('./routes/usuarios_routes');
 //los siguientes tres son para los archovos de la  carpeta de ssl
