@@ -1,61 +1,53 @@
 const Curso = require('../models/curso_model');
 const Usuario = require('../models/usuario_model');
+//const { cursoSchemaValidation } = require('../validations/curso_validation'); // Importa el esquema de validación
 
 // Función asíncrona para crear cursos
 async function crearCurso(body) {
     // Verificar si ya existe un curso con el mismo título
     const cursoExistente = await Curso.findOne({ titulo: body.titulo });
-
     if (cursoExistente) {
         throw new Error('El curso con este título ya existe');
     }
-
     let curso = new Curso({
         titulo: body.titulo,
         descripcion: body.descripcion,
         estado: body.estado,
         imagen: body.imagen,
         alumnos: body.alumnos,
-        calificacion: body.calificacion,
+        calificacion: body.calificacion
     });
-
     return await curso.save();
 }
 
 // Función asíncrona para actualizar cursos
 async function actualizarCurso(id, body) {
-    let curso = await Curso.findByIdAndUpdate(
-        id,
-        {
-            $set: {
-                titulo: body.titulo,
-                descripcion: body.descripcion,
-                estado: body.estado,
-                imagen: body.imagen,
-                alumnos: body.alumnos,
-                calificacion: body.calificacion,
-            },
-        },
-        { new: true }
-    );
+    let curso = await Curso.findByIdAndUpdate(id, {
+        $set: {
+            titulo: body.titulo,
+            descripcion: body.descripcion,
+            estado: body.estado,
+            imagen: body.imagen,
+            alumnos: body.alumnos,
+            calificacion: body.calificacion
+        }
+    }, { new: true });
     return curso;
 }
 
 // Función asíncrona para inactivar cursos
 async function desactivarCurso(id) {
-    let curso = await Curso.findByIdAndUpdate(
-        id,
-        {
-            $set: { estado: false },
-        },
-        { new: true }
-    );
+    let curso = await Curso.findByIdAndUpdate(id, {
+        $set: {
+            estado: false
+        }
+    }, { new: true });
     return curso;
 }
 
 // Función asíncrona para listar los cursos activos
 async function listarCursosActivos() {
-    let cursos = await Curso.find({ estado: true });
+    let cursos = await Curso.find({ "estado": true });
     return cursos;
 }
 
@@ -85,7 +77,6 @@ async function guardarCursos(cursos) {
 async function buscarCursoPorId(id) {
     try {
         const curso = await Curso.findById(id);
-
         if (!curso) {
             throw new Error(`Curso con ID ${id} no encontrado`);
         }
@@ -99,12 +90,11 @@ async function buscarCursoPorId(id) {
 // Función asíncrona para buscar usuarios asociados a un curso
 async function buscarUsuariosPorCurso(id) {
     try {
-        // Buscar usuarios que tengan el curso en su lista de cursos y hacer populate del campo cursos
+        // Buscar usuarios que tengan el curso en su lista de cursos y hacer populate del campo
         const usuarios = await Usuario.find({ cursos: id }).populate('cursos', 'titulo');
         if (!usuarios || usuarios.length === 0) {
             throw new Error(`No se encontraron usuarios asociados al curso con ID ${id}`);
         }
-
         // Procesar los resultados para devolver solo los títulos de los cursos
         const usuariosConCursos = usuarios.map(usuario => {
             return {
@@ -113,7 +103,8 @@ async function buscarUsuariosPorCurso(id) {
                 nombre: usuario.nombre,
                 password: usuario.password,
                 estado: usuario.estado,
-                __v: usuario.__v,
+                // cursos: usuario.cursos.map(curso => curso.titulo), // Solo incluye el título de cada
+                __v: usuario.__v
             };
         });
         return usuariosConCursos;
@@ -130,5 +121,5 @@ module.exports = {
     listarCursosActivos,
     guardarCursos,
     buscarCursoPorId,
-    buscarUsuariosPorCurso,
+    buscarUsuariosPorCurso
 };

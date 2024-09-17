@@ -57,11 +57,10 @@ async function desactivarUsuario(email) {
 
 // Función asíncrona para listar todos los usuarios activos
 async function listarUsuarioActivos() {
-    let usuarios = await Usuario.find({ estado: true }).populate({
+    let usuarios = await Usuario.find({ "estado": true }).populate({
         path: 'cursos',
-        select: 'titulo', // Selecciona solo el campo 'titulo' del curso
+        select: 'titulo' // Selecciona solo el campo 'titulo' del curso
     });
-
     // Mapea los usuarios para devolver solo los títulos de los cursos
     usuarios = usuarios.map(usuario => {
         const cursosSoloTitulos = usuario.cursos.map(curso => curso.titulo);
@@ -73,10 +72,9 @@ async function listarUsuarioActivos() {
             estado: usuario.estado,
             imagen: usuario.imagen,
             cursos: cursosSoloTitulos, // Reemplaza los cursos con solo los títulos
-            __v: usuario.__v,
+            __v: usuario.__v
         };
     });
-
     return usuarios;
 }
 
