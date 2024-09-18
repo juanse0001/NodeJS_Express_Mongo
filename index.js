@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const seedDatabase = require('./seeds/seeds')
 const connectDB = require('./configdb/db'); // Asegúrate de que la ruta sea correcta
 const cursosRoutes = require('./routes/cursos_routes');
@@ -16,7 +17,7 @@ const { swaggerUi, swaggerSpec} = require ('./swagger/swagger');//Importa swagge
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para parsear JSON
+// Middleware para mappear JSON
 app.use(express.json());
 
 //Carga el certificado ssl y la clave privada 
@@ -58,7 +59,7 @@ app.use(express.static(publicPath)); // Servir archivos estáticos desde la ruta
 const port = process.env.PORT || 3000;
 
 https.createServer(options, app).listen(port, () => {
-  console.log('Servidor HTTPS corriendo en https://localhost:3000');
+  console.log('Servidor HTTPS corriendo en https://localhost:');
   console.log('Api REST Ok, y ejecutándose...');
 });
 
