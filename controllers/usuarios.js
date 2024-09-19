@@ -6,11 +6,12 @@ const Usuario = require('../models/usuario_model'); // Ajusta la ruta según tu 
 const listarUsuarioActivos = async (_, res) => {
     try {
         const usuarios = await logic.listarUsuarioActivos();
-        if (usuarios.length === 0) {
+        if (!usuarios || usuarios.length === 0) {
             return res.status(204).send(); // 204 No Content
         }
         res.json(usuarios);
     } catch (err) {
+        console.error("Error al listar usuarios activos:", err);
         res.status(500).json({ error: 'Error interno del servidor', details: err.message });
     }
 };
@@ -73,6 +74,9 @@ const agregarCursosAUsuario = async (req, res) => {
     }
     try {
         const usuarioActualizado = await logic.agregarCursosAUsuario(email, cursos);
+        if (!usuarioActualizado) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
         res.json({ usuario: usuarioActualizado });
     } catch (err) {
         res.status(500).json({ error: 'Error interno del servidor', details: err.message });
@@ -84,7 +88,7 @@ const listarCursosDeUsuario = async (req, res) => {
     const { usuarioId } = req.params;
     try {
         const cursos = await logic.listarCursosDeUsuario(usuarioId);
-        if (cursos.length === 0) {
+        if (!cursos || cursos.length === 0) {
             return res.status(204).send(); // No Content
         }
         res.json(cursos);
